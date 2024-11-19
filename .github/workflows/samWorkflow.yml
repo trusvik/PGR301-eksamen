@@ -12,14 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install Dependencies
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli unzip
-          curl -Lo sam-installation.zip https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
-          unzip sam-installation.zip -d sam-install
-          sudo ./sam-install/install
+      # Install AWS CLI (optional if it's already installed in the image)
+      - name: Install AWS CLI
+        run: sudo apt-get update && sudo apt-get install -y awscli
 
       # Configure AWS credentials (using GitHub Secrets)
       - name: Configure AWS Credentials
