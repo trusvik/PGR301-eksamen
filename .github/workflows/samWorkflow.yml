@@ -16,6 +16,20 @@ jobs:
       - name: Install AWS CLI
         run: sudo apt-get update && sudo apt-get install -y awscli
 
+      # I run a newer version of .py then GitHub, therefore download is imminent
+      - name: Install Python 3.12
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository -y ppa:deadsnakes/ppa
+          sudo apt-get update
+          sudo apt-get install -y python3.12 python3.12-venv python3.12-distutils
+
+      # Verify Python 3.12 installation
+      - name: Verify Python 3.12 installation
+        run: python3.12 --version
+
+
       # Configure AWS credentials (using GitHub Secrets)
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
