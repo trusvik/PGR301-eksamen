@@ -53,4 +53,4 @@ jobs:
       - name: Deploy SAM Application
         run: |
           cd sam_lambda/toru010-ImageGenerator
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changes
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
