@@ -24,6 +24,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
 
+      # Navigate to the correct directory
+      - name: Change to SAM project directory
+        run: cd sam_lambda/toru010-ImageGenerator
+
       # Build the SAM application
       - name: Build Sam Application
         run: sam build
