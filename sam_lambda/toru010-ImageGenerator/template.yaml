@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda function for image generation using Bedrock and S3
+
+Resources:
+  GenerateImageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler  # Change if your file is named differently
+      CodeUri: hello_world/
+      Runtime: python3.12
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          S3_BUCKET: "pgr301-couch-explorers"
+      Policies:
+        - S3WritePolicy:
+            BucketName: "pgr301-couch-explorers"
+        - Statement:
+            Effect: Allow
+            Action:
+              - "bedrock:InvokeModel"
+            Resource: "*"
+      Events:
+        GenerateImageApi:
+          Type: Api
+          Properties:
+            Path: /generate-image
+            Method: POST
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate-image"
