@@ -33,6 +33,8 @@ def lambda_handler(event, context):
             },
         }
 
+        testMyWorkFlow = 1
+
         # Invoke the model
         response = bedrock_client.invoke_model(
             modelId=MODEL_ID,
