@@ -67,10 +67,18 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Action = [
           "sqs:ReceiveMessage",
           "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes"
+          "sqs:GetQueueAttributes",
+          "sqs:SendMessage"
         ],
         Effect = "Allow",
         Resource = aws_sqs_queue.image_generation_queue.arn
+      },
+      {
+        Action = [
+          "bedrock:InvokeModel"
+        ]
+        Effect = "Allow"
+        Resource = "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-image-generator-v1"
       }
     ]
   })
