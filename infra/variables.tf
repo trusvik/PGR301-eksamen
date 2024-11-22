@@ -3,3 +3,8 @@ variable "bucket_name" {
   type        = string
   default = "pgr301-couch-explorers"
 }
+
+variable "alarm_email" {
+  default = "tobias.r.rusvik@gmail.com"
+  type = string
+}

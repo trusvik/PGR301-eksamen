@@ -123,3 +123,26 @@ resource "aws_lambda_event_source_mapping" "sqs_trigger" {
   batch_size       = 5
   enabled          = true
 }
+
+resource "aws_cloudwatch_metric_alarm" "toru010-Alarm" {
+  alarm_name                = "toru010-AAOOM"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = 1
+  metric_name               = "ApproximateAgeOfMessage"
+  namespace                 = "toru010"
+  period                    = 5
+  statistic                 = "Maximum"
+  threshold                 = 10
+  alarm_description         = "This metric monitors sqs timedelay"
+  insufficient_data_actions = []
+}
+
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = aws_sns_topic.user_updates.arn
+  protocol  = "email"
+  endpoint  = var.alarm_email
+}
+
+resource "aws_sns_topic" "user_updates" {
+  name = "toru010-AAOOM"
+}
