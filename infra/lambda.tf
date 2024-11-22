@@ -128,14 +128,20 @@ resource "aws_cloudwatch_metric_alarm" "toru010-Alarm" {
   alarm_name                = "toru010-AAOOM"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 1
-  metric_name               = "ApproximateAgeOfMessage"
-  namespace                 = "toru010"
-  period                    = 5
+  metric_name               = "ApproximateAgeOfOldestMessage"
+  namespace                 = "AWS/SQS"
+  period                    = 60
   statistic                 = "Maximum"
   threshold                 = 10
-  alarm_description         = "This metric monitors sqs timedelay"
-  insufficient_data_actions = []
+  alarm_description         = "This metric monitors the age of the oldest message in the SQS queue"
+  insufficient_data_actions = [aws_sns_topic.user_updates.arn]
+  alarm_actions             = [aws_sns_topic.user_updates.arn]
+
+  dimensions = {
+    QueueName = aws_sqs_queue.image_generation_queue.name
+  }
 }
+
 
 resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   topic_arn = aws_sns_topic.user_updates.arn
