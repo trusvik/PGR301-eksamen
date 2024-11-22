@@ -12,7 +12,7 @@
     <artifactId>imagegenerator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>imagegenerator</name>
-    <description>Image generator based on AWS bedrocl</description>
+    <description>Image generator based on AWS bedrock</description>
     <url/>
     <licenses>
         <license/>
